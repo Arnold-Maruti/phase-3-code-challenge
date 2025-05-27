@@ -56,27 +56,24 @@ class Author:
         data=CURSOR.execute(sql,(self.id,)).fetchall()
         return [dats[1] for dats in data]
     
-    @classmethod
-    def authors_for_magazine(cls,magazine_id):
-        sql="""            
-        SELECT DISTINCT a.* FROM authors a
-        JOIN articles ar ON a.id = ar.author_id
-        WHERE ar.magazine_id = ?
-        """
-        datas=CURSOR.execute(sql,(magazine_id,)).fetchall()
-        return [data[1]for data in datas]
-    
-    @classmethod
-    def magazines_with_multiple_authors(cls):
+    def add_article(self,magazine,title):
         sql="""
-        SELECT m.*
-        FROM magazines m
-        JOIN articles a ON m.id = a.magazine_id
-        GROUP BY m.id
-        HAVING COUNT(DISTINCT a.author_id) >= 2
+        INSERT INTO articles (title, author_id, magazine_id)
+        VALUES (?, ?, ?)
         """
-        rows=CURSOR.execute(sql).fetchall()
-        return [rows[1]for row in rows]
+        CURSOR.execute(sql,(title,self.id,magazine.id))
+        CONN.commit()
+
+    def topic_areas(self):
+        sql="""
+        SELECT DISTINCT m.category FROM magazines m
+        JOIN articles a ON m.id = a.magazine_id
+        WHERE a.author_id = ?
+        """
+        rows=CURSOR.execute(sql,(self.id,)).fetchall()
+        return [row['category'] for row in rows]
+    
+
     
 
 
