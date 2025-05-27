@@ -2,7 +2,7 @@ from lib.db.connection import CONN,CURSOR
 
 class Magazine:
       all={}
-      def __init__(self, id, name, category):
+      def __init__(self,name, category,id=None):
            self.id = id
            self.name = name
            self.category = category
@@ -19,7 +19,7 @@ class Magazine:
       @classmethod
       def find_by_id(cls, id):
             sql="""SELECT * FROM magazines WHERE id = ?"""
-            rows=CURSOR.execute(sql,(id,)).fetchone
+            rows=CURSOR.execute(sql,(id,)).fetchone()
             return rows[1] if rows else None
         
       def articles(self):

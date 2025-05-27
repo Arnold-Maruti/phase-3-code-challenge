@@ -2,7 +2,7 @@ from lib.db.connection import CONN,CURSOR
 
 class Article:
     all={}
-    def __init__(self, id, title, author_id, magazine_id):
+    def __init__(self,title, author_id, magazine_id,id=None):
         self.id = id
         self.title = title
         self.author_id = author_id
