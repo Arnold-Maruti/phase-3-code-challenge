@@ -73,6 +73,19 @@ class Author:
         rows=CURSOR.execute(sql,(self.id,)).fetchall()
         return [row['category'] for row in rows]
     
+    @classmethod
+    def top_author(cls):
+        sql="""
+        SELECT a.*, COUNT(ar.id) AS article_count
+        FROM authors a
+        JOIN articles ar ON a.id = ar.author_id
+        GROUP BY a.id
+        ORDER BY article_count DESC
+        LIMIT 1
+        """
+        rows=CURSOR.execute(sql).fetchone()
+        return rows[1] if rows else None
+    
 
     
 

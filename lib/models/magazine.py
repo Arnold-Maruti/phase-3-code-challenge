@@ -30,3 +30,14 @@ class Magazine:
             HAVING COUNT(*) > 2"""
             return CURSOR.execute(sql,(self.id,)).fetchall()
         
+        def article_counts(cls):
+            sql="""
+            SELECT m.id, m.name, COUNT(a.id) AS article_count
+            FROM magazines m
+            LEFT JOIN articles a ON m.id = a.magazine_id
+            GROUP BY m.id, m.name
+            ORDER BY article_count DESC"""
+            results=CURSOR.execute(sql).fetchall()
+            return results
+        
+        
