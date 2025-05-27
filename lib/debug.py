@@ -5,13 +5,10 @@ print(article.Article.find_by_id(2))
 # hr=author.Author(4,"jersey")
 # hr.save()
 
-biggie=article.Article("biggie",2,3)
-biggie.save()
+# biggie=article.Article("poker",2,3)
+# biggie.save()
 
-timesnewyork=magazine.Magazine("timesnewyork","action")
-timesnewyork.save()
-
-print(magazine.Magazine.find_by_id(1))
-print(timesnewyork.articles())
+# timesnewyork=magazine.Magazine("timesnewyork","action")
+# timesnewyork.save()
 
 

@@ -50,6 +50,6 @@ class Magazine:
             GROUP BY m.id, m.name
             ORDER BY article_count DESC"""
             results=CURSOR.execute(sql).fetchall()
-            return results
+            return [result[1] for result in results]
         
         
