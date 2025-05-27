@@ -71,7 +71,7 @@ class Author:
         WHERE a.author_id = ?
         """
         rows=CURSOR.execute(sql,(self.id,)).fetchall()
-        return [row[0] for row in rows]
+        return [row[2] for row in rows]
     
     @classmethod
     def top_author(cls):
