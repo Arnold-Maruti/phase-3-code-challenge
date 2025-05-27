@@ -17,9 +17,9 @@ class Author:
     
     def save(self):
         sql="""
-        INSERT INTO authors(id,name) VALUES(?,?)
+        INSERT INTO authors(name) VALUES(?)
         """
-        CURSOR.execute(sql,(self.id,self.name))
+        CURSOR.execute(sql,(self.name,))
         CONN.commit()
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
@@ -46,7 +46,7 @@ class Author:
     
     def articles(self):
         sql="""SELECT * FROM articles WHERE author_id=?"""
-        rows=CURSOR.execute(sql,(self.id,))
+        rows=CURSOR.execute(sql,(self.id,)).fetchall()
         return [row[1] for row in rows]
     
     def magazines(self):
@@ -71,7 +71,7 @@ class Author:
         WHERE a.author_id = ?
         """
         rows=CURSOR.execute(sql,(self.id,)).fetchall()
-        return [row['category'] for row in rows]
+        return [row[0] for row in rows]
     
     @classmethod
     def top_author(cls):

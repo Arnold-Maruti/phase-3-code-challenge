@@ -1,11 +1,21 @@
 from lib.db.connection import CONN,CURSOR
 
 class Article:
+    all={}
     def __init__(self, id, title, author_id, magazine_id):
         self.id = id
         self.title = title
         self.author_id = author_id
         self.magazine_id = magazine_id
+
+    def save(self):
+        sql="""
+        INSERT INTO articles(title,author_id,magazine_id) VALUES(?,?,?)
+        """
+        CURSOR.execute(sql,(self.title,self.author_id,self.magazine_id))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
 
     @classmethod
     def find_by_id(cls,id):
